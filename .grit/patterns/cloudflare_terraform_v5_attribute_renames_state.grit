@@ -13,7 +13,7 @@ pattern cloudflare_terraform_v5_attribute_renames_state() {
     // cloudflare_api_token
     `{ "mode": "managed", "type": "$resource_type", $..., "instances":[$instances] }` where {
         and {
-            $resource_type <: contains `cloudflare_api_token`,
+            $resource_type <: `cloudflare_api_token`,
             $instances <: contains `"policy": $v` => `"policies": $v`
         }
     },

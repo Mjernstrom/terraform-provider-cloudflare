@@ -18,34 +18,6 @@ pattern cloudflare_terraform_v5_attribute_renames_state() {
         }
     },
 
-    // cloudflare_api_token
-    `{
-        "version": $version,
-        "terraform_version": $terraform_version,
-        "serial": $serial,
-        "lineage": $lineage,
-        "outputs": $outputs,
-        "resources": $resources,
-        "check_results": $check_results
-        }` where {
-            $resources <: some `{
-                "mode": $mode,
-                "type": $type,
-                "name": $name,
-                "provider": $provider,
-                "instances": $instances
-                }` where {
-                    $type <: `cloudflare_api_token`,
-                    $instances <: some `{
-                        "schema_version": $schema_version,
-                        "attributes": $attributes,
-                    $...
-                }` where {
-                    $attributes <: contains `"policy": $v` => `"policies": $v`
-            }
-        }
-    }
-
     // cloudflare_account_member
     `{ "mode": "managed", "type": "$resource_type", $..., "instances":[$instances] }` where {
         and {

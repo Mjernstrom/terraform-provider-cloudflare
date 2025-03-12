@@ -20,14 +20,14 @@ pattern cloudflare_terraform_v5_attribute_renames_state() {
 
     // cloudflare_api_token
     `{ "mode": "managed", "type": "$resource_type", $..., "instances": $instances }` where {
-    $resource_type <: `cloudflare_api_token`,
-    $instances <: some `{
-        "attributes": $attributes,
-        $...
-    }` where {
-        $attributes <: contains `"policy": $v` => `"policies": $v`
-    }
-}
+        $resource_type <: `cloudflare_api_token`,
+        $instances <: some `{
+            "attributes": $attributes,
+            $...
+        }` where {
+            $attributes <: contains `"policy": $v` => `"policies": $v`
+        }
+    },
 
     // cloudflare_account_member
     `{ "mode": "managed", "type": "$resource_type", $..., "instances":[$instances] }` where {
